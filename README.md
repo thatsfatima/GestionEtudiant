@@ -1,6 +1,6 @@
 # GestionEtudiant
 
-# Système de Gestion des Étudiants
+## Système de Gestion des Étudiants
 
 ## **Description**
 Ce projet est une application interne pour la gestion des étudiants d’un établissement scolaire. Il utilise **Python**, **MongoDB** pour le stockage des données, et **Redis** pour optimiser les performances grâce à la mise en cache.
