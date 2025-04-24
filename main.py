@@ -2,12 +2,11 @@ from services.gestion_etudiants import GestionEtudiants
 from services.gestion_utilisateur import Utilisateur
 from services import db, redis_cache
 
-utilisateur_service = Utilisateur(db, redis_cache)
+utilisateur_service = Utilisateur(db.MongoService(), redis_cache.RedisCache())
 session_token = None
 
 def main():
     gestion = GestionEtudiants()
-    global session_token
 
     while True:
         print("\n=== MENU Principal ===")
@@ -61,9 +60,15 @@ def main():
                     choix_admin = input("Choix : ")
 
                     if choix_admin == "1":
-                        gestion.ajouter_etudiant()
+                        nom = input("Nom : ")
+                        prenom = input("Prénom : ")
+                        telephone = input("Téléphone : ")
+                        classe = input("classe : ")
+                        gestion.ajouter_etudiant(nom, prenom, telephone, classe)
                     elif choix_admin == "2":
-                        gestion.modifier_notes()
+                        matiere = input("Matiere : ")
+                        valeur = input("Valeur:" )
+                        gestion.modifier_notes(matiere, valeur)
                     elif choix_admin == "3":
                         gestion.supprimer_etudiant()
                     elif choix_admin == "4":

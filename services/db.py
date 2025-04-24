@@ -12,6 +12,7 @@ class MongoService:
         self.db = self.client["etablissement"]
         self.etudiants = self.db["etudiants"]
         self.utilisateurs = self.db["utilisateurs"]
+        self.classes = self.db["classes"]
 
     def close(self):
         self.client.close()

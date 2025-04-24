@@ -1,6 +1,9 @@
 from models.etudiant import Etudiant
+from models.note import Note
+from services.gestion_notes import GestionNote
 from services.db import MongoService
 from services.redis_cache import RedisCache
+import json
 import pandas as pd
 from fpdf import FPDF
 
@@ -8,16 +11,14 @@ class GestionEtudiants:
     def __init__(self):
         self.db = MongoService()
         self.cache = RedisCache()
+        self.noteService = GestionNote()
 
-    def ajouter_etudiant(self, nom, prenom, telephone, classe, notes):
+    def ajouter_etudiant(self, nom, prenom, telephone, classe):
         if self.db.etudiants.find_one({"telephone": telephone}):
             print("❌ Téléphone déjà utilisé !")
             return
 
-        if not all(0 <= note <= 20 for note in notes):
-            print("❌ Notes invalides (doivent être entre 0 et 20) !")
-            return
-
+        notes = GestionNote.ajouterNoteClasse(classe)
         etudiant = Etudiant(nom, prenom, telephone, classe, notes)
         etudiant_data = etudiant.to_dict()
 
@@ -45,12 +46,29 @@ class GestionEtudiants:
         for etu in etudiants:
             print(f"{etu['nom']} {etu['prenom']} | Classe : {etu['classe']} | Moyenne : {etu['moyenne']}")
 
-    def modifier_notes(self, telephone, nouvelles_notes):
-        if not all(0 <= note <= 20 for note in nouvelles_notes):
-            print("❌ Notes invalides (doivent être entre 0 et 20) !")
+    def modifier_notes(self, telephone, matiere, note):
+        etudiant = self.db.etudiants.find_one({"telephone": telephone})
+
+        if not etudiant:
+            print("❌ Étudiant non trouvé.")
             return
 
-        moyenne = sum(nouvelles_notes) / len(nouvelles_notes)
+        anciennes_notes = etudiant.get("notes", [])
+        
+        nouvelles_notes = []
+        note_trouvee = False
+
+        for n in anciennes_notes:
+            if n["libelle"] == matiere:
+                nouvelles_notes.append({"libelle": matiere, "valeur": note})
+                note_trouvee = True
+            else:
+                nouvelles_notes.append(n)
+
+        if not note_trouvee:
+            print("❌ Cette matiere n'est pas disponible.")
+
+        moyenne = sum(n["valeur"] for n in nouvelles_notes) / len(nouvelles_notes)
 
         result = self.db.etudiants.update_one(
             {"telephone": telephone},
@@ -58,11 +76,9 @@ class GestionEtudiants:
         )
 
         if result.matched_count == 0:
-            print("❌ Étudiant non trouvé.")
+            print("❌ Mise à jour échouée.")
             return
 
-        etudiant = self.db.etudiants.find_one({"telephone": telephone}, {'_id': 0})
-        self.cache.set_etudiant(telephone, etudiant)
         print("✅ Notes modifiées avec succès.")
 
     def supprimer_etudiant(self, telephone):

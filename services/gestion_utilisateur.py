@@ -9,7 +9,7 @@ class Utilisateur:
         self.collection = db.utilisateurs
 
     def creer_utilisateur(self, nom, prenom, telephone, mot_de_passe, role):
-        if self.collection.find_one({"telephone": telephone}):
+        if self.db.utilisateurs.find_one({"telephone": telephone}):
             print("❌ Utilisateur déjà existant.")
             return
 
