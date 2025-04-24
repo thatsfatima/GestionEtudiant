@@ -13,7 +13,6 @@ Ce projet est une application interne pour la gestion des étudiants d’un éta
 ## **Installation et Lancement**
 
 ### **Prérequis**
-Avant de commencer, assurez-vous d'avoir les éléments suivants :
 - **Python** (version 3.9 ou supérieure).
 - **MongoDB** (service actif sur votre machine ou serveur).
 - **Redis** (service actif).
@@ -21,7 +20,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants :
 ### **Étapes d'installation**
 1. Clonez ce dépôt sur votre machine :
    ```bash
-   git clone https://github.com/votre-utilisateur/gestion-etudiants.git
+   git clone https://github.com/thatsfatima/GestionEtudiant.git
    cd gestion-etudiants
    ```
 
@@ -30,9 +29,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants :
    pip install -r requirements.txt
    ```
 
-3. Configurez les connexions MongoDB et Redis dans le fichier `config.json`.
-
-4. Lancez l’application :
+3. Lancez l’application :
    ```bash
    python gestion_etudiants/main.py
    ```
@@ -60,7 +57,6 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants :
 
 ### **3. Statistiques et rapports**
 - Calcul de la moyenne générale par classe.
-- Classement des étudiants (Top 10).
 - Génération de rapports PDF avec un résumé des résultats.
 
 ---
@@ -80,12 +76,6 @@ Une fois l'application lancée, naviguez à travers le menu interactif en ligne 
 9. Gérer les utilisateurs.
 
 Sélectionnez une option en entrant son numéro correspondant.
-
----
-
-## **Contributeurs**
-- **Nom 1** - Rôle
-- **Nom 2** - Rôle
 
 ---
 
