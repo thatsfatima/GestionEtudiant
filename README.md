@@ -1,8 +1,5 @@
 # GestionEtudiant
 
-Voici un fichier `README.md` en code pour votre projet :
-
-```markdown
 # Système de Gestion des Étudiants
 
 ## **Description**
