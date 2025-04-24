@@ -73,12 +73,3 @@ Une fois l'application lancée, naviguez à travers le menu interactif en ligne 
 9. Gérer les utilisateurs.
 
 Sélectionnez une option en entrant son numéro correspondant.
-
----
-
-## **Licence**
-Ce projet est sous licence [MIT](https://opensource.org/licenses/MIT).
-```
-
-Ce fichier peut être enregistré directement sous le nom `README.md`. Il contient une structure claire avec les instructions pour l’installation, les fonctionnalités principales, et l’utilisation.
-```
